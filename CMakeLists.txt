@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(melodeon VERSION 0.4.5 LANGUAGES CXX)
+project(melodeon VERSION 0.5.0 LANGUAGES CXX)
 set(FREEDESKTOP_NAME "io.github.cdrummond.${PROJECT_NAME}")
 set(EXECUTABLE_NAME ${PROJECT_NAME})
 
@@ -30,19 +30,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Network Svg Widgets WebEngineWidgets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Network Svg Widgets WebEngineWidgets REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Core Network Svg Widgets WebEngineWidgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Network Svg Widgets WebEngineWidgets REQUIRED)
 
-if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6core6, libqt6gui6, libqt6network6, libqt6svg6, libqt6widgets6, libqt6webenginewidgets6, libqt6webenginecore6")
-else()
-    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5t64, libqt5gui5t64, libqt5network5t64, libqt5svg5t64, libqt5widgets5t64, libqt5webenginewidgets5, libqt5webenginecore5, libqt5webengine5")
-endif()
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt6core6, libqt6gui6, libqt6network6, libqt6svg6, libqt6widgets6, libqt6webenginewidgets6, libqt6webenginecore6")
 
 include(CPack)
 
 if (UNIX AND NOT APPLE)
-    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS DBus REQUIRED)
+    find_package(Qt6 COMPONENTS DBus REQUIRED)
 endif()
 
 set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
@@ -82,22 +78,18 @@ if (UNIX AND NOT APPLE)
     qt_add_dbus_interface(PROJECT_SOURCES src/linux/org.freedesktop.UPower.xml upowerinterface)
 endif()
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(${EXECUTABLE_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
-else()
-    add_executable(${EXECUTABLE_NAME} ${PROJECT_SOURCES})
-endif()
+qt_add_executable(${EXECUTABLE_NAME} MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(${EXECUTABLE_NAME} PRIVATE
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Network
-    Qt${QT_VERSION_MAJOR}::Svg
-    Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::WebEngineWidgets
+    Qt6::Core
+    Qt6::Network
+    Qt6::Svg
+    Qt6::Widgets
+    Qt6::WebEngineWidgets
     SingleApplication::SingleApplication)
 
 if (UNIX AND NOT APPLE)
-    target_link_libraries(${EXECUTABLE_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::DBus)
+    target_link_libraries(${EXECUTABLE_NAME} PRIVATE Qt6::DBus)
 endif()
 
 set_target_properties(${EXECUTABLE_NAME} PROPERTIES
@@ -108,9 +100,7 @@ set_target_properties(${EXECUTABLE_NAME} PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(${EXECUTABLE_NAME})
-endif()
+qt_finalize_executable(${EXECUTABLE_NAME})
 
 set(SHARE_PREFIX ${CMAKE_INSTALL_PREFIX}/share/${EXECUTABLE_NAME})
 configure_file(config.h.cmake ${CMAKE_BINARY_DIR}/config.h)

@@ -47,18 +47,9 @@
 #include <QtGui/QScreen>
 #include <QtGui/QWindow>
 #include <QtNetwork/QAuthenticator>
-
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtWebEngineCore/QWebEngineProfile>
-#else
-#include <QtWebEngineWidgets/QWebEngineProfile>
-#endif
 #include <QtWebEngineWidgets/QWebEngineView>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtGui/QAction>
-#else
-#include <QtWidgets/QAction>
-#endif
 #include <QtWidgets/QStackedWidget>
 
 static const QString constSettingsUrl("mska://settings");
@@ -145,12 +136,10 @@ MainWindow::MainWindow()
     connect(zoomOutAct, &QAction::triggered, this, &MainWindow::zoomOut);
     addAction(zoomOutAct);
 
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QAction *settingsAct = new QAction(this);
-    settingsAct->setShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_Comma);
+    settingsAct->setShortcut(QKeySequence::Preferences);
     connect(settingsAct, &QAction::triggered, this, &MainWindow::showSettings);
     addAction(settingsAct);
-#endif
 
     setMinimumSize(450, 500);
     if (powerManagement) {

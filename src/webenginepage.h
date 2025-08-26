@@ -23,12 +23,7 @@
 #define WEBENGINEPAGE_H
 
 #include <QtCore/QMap>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtWebEngineCore/QWebEnginePage>
-#else
-#include <QtWebEngineWidgets/QWebEnginePage>
-#endif
-
 
 class Status;
 

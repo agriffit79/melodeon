@@ -23,11 +23,7 @@
 #define TMPWEBENGINEPAGE_H
 
 #include <QtCore/QtCore>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtWebEngineCore/QWebEnginePage>
-#else
-#include <QtWebEngineWidgets/QWebEnginePage>
-#endif
 
 class TmpWebEnginePage : public QWebEnginePage {
     Q_OBJECT

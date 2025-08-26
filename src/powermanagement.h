@@ -23,6 +23,7 @@
 #define POWERMANAGEMENT_H
 
 #include <QtCore/QObject>
+
 class Player;
 
 class PowerManagement : public QObject {

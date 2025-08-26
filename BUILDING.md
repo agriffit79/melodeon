@@ -4,8 +4,10 @@ Cloning
 2. cd  melodeon
 3. git submodule update --init --recursive
 
+
 Build
 -----
+
 1. cd melodeon
 2. sudo apt install cmake g++ qt6-base-dev qt6-svg-dev qt6-webengine-dev
 3. mkdir build
@@ -17,14 +19,18 @@ Build
 
 Create DEB package
 ------------------
+
 1. sudo apt install dpkg-dev
 2. Perform steps 1..6 of `Building` (above)
 3. cpack -G DEB
 
+
 Create Snap package
 -------------------
+
 These steps assume you do not have Docker installed as it may conflict with lxd which is used by snapcraft.
 Also, enure you have plenty of spare disk space, the build process can easily consume 10-20G under /var.
+
 1. Perform cloning steps 1-3.
 2. `sudo snap install snapcraft --classic`
 3. `sudo snap install --channel 5.21/stable lxd`

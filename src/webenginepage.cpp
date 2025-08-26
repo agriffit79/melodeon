@@ -26,11 +26,7 @@
 #include "status.h"
 #include "themes.h"
 #include <QtGui/QDesktopServices>
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #include <QtWebEngineCore/QWebEngineSettings>
-#else
-#include <QtWebEngineWidgets/QWebEngineSettings>
-#endif
 
 static const QLatin1String constThemeLog("MATERIAL-THEME");
 static const QLatin1String constStatusLog("MATERIAL-STATUS");
